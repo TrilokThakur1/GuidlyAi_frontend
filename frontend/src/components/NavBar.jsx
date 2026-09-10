@@ -27,7 +27,7 @@ export default function NavBar() {
             </div>
             <h2 className="text-xl font-bold tracking-tight text-slate-900">
               <Link to="/" className="hover:text-indigo-600 transition">
-                Guidly
+                GuidlyAi
               </Link>
             </h2>
           </div>

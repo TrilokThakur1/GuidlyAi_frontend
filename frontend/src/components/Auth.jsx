@@ -21,52 +21,54 @@ export default function Auth() {
   const success = (msg) => toast.success(msg);
   const error = (msg) => toast.error(msg);
 
-  async function handleSignIn(e) {
-    e.preventDefault();
+ async function handleSignIn(e) {
+  e.preventDefault();
 
-    let data = {
-      email: e.target[0].value,
-      password: e.target[1].value,
-    };
+  let data = {
+    email: e.target[0].value,
+    password: e.target[1].value,
+  };
 
-    let res = await axios.post(`${api}/api/auth/login`, data);
+  let res = await axios.post(`${api}/api/auth/login`, data);
 
-    if (res.status == 200) {
-      localStorage.setItem("access_token", res.data.access_token);
-      localStorage.setItem("refresh_token", res.data.refresh_token);
-      navigate("/");
-      success(res.data.message);
-    } else {
-      error(res.data.message);
-    }
+  if (res.status == 200) {
+    const { access_token, refresh_token } = res.data; // <-- changed from res.data.data
+
+    localStorage.setItem("access_token", access_token);
+    localStorage.setItem("refresh_token", refresh_token);
+
+    navigate("/profile");
+    success(res.data.message);
+  } else {
+    error(res.data.message);
   }
-  async function handleSignUp(e) {
-    e.preventDefault();
+}
 
-    const formData = new FormData();
+async function handleSignUp(e) {
+  e.preventDefault();
 
-    formData.append("name", e.target[0].value);
-    formData.append("avatar", e.target[1].files[0]); // Actual file
-    formData.append("email", e.target[2].value);
-    formData.append("password", e.target[3].value);
+  const formData = new FormData();
 
-    try {
-      const res = await axios.post(`${api}/api/auth/register`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+  formData.append("name", e.target[0].value);
+  formData.append("avatar", e.target[1].files[0]);
+  formData.append("email", e.target[2].value);
+  formData.append("password", e.target[3].value);
 
-      localStorage.setItem("access_token", res.data.access_token);
-      localStorage.setItem("refresh_token", res.data.refresh_token);
+  try {
+    const res = await axios.post(`${api}/api/auth/register`, formData);
 
-      success(res.data.message);
-      navigate("/");
-    } catch (err) {
-      console.log(err.response?.data);
-      error(err.response?.data?.message || "Registration failed");
-    }
+    const { access_token, refresh_token } = res.data; // <-- changed from res.data.data
+
+    localStorage.setItem("access_token", access_token);
+    localStorage.setItem("refresh_token", refresh_token);
+
+    success(res.data.message);
+    navigate("/profile");
+  } catch (err) {
+    console.log(err.response?.data);
+    error(err.response?.data?.message || "Registration failed");
   }
+}
 
   return (
     <div className="min-h-screen flex items-center justify-center  px-4">

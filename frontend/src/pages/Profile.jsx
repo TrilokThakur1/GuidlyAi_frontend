@@ -30,14 +30,14 @@ export default function Profile() {
   useEffect(() => {
     async function getUserData() {
       try {
-        if (!token?.refresh_token) return;
+        if (!token?.access_token) return;
 
         const res = await axios.get(`${api}/api/auth/userDetails`, {
           headers: {
-            Authorization: `Bearer ${token.refresh_token}`,
+            Authorization: `Bearer ${token.access_token}`,
           },
         });
-
+        console.log(token)
         setUser({
           id: res.data.data.id,
           name: res.data.data.name,
