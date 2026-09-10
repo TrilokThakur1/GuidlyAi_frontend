@@ -37,7 +37,7 @@ export default function Profile() {
             Authorization: `Bearer ${token.access_token}`,
           },
         });
-        console.log(token)
+        // console.log(token)
         setUser({
           id: res.data.data.id,
           name: res.data.data.name,
