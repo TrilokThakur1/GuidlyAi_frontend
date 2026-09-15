@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../context/UserData";
 import {
@@ -16,8 +17,9 @@ let api = import.meta.env.VITE_API_URL;
 
 export default function RoadMap() {
   const { token } = useContext(UserContext);
+  const location = useLocation();
 
-  const [roadmap, setRoadmap] = useState(null);
+  const [roadmap, setRoadmap] = useState(location.state?.roadmapData || null);
   const [loading, setLoading] = useState(false);
 
   const [user, setUser] = useState({

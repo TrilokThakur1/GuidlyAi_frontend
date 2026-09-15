@@ -37,7 +37,7 @@ export default function Profile() {
             Authorization: `Bearer ${token.access_token}`,
           },
         });
-        console.log(token)
+        // console.log(token)
         setUser({
           id: res.data.data.id,
           name: res.data.data.name,
@@ -172,6 +172,7 @@ export default function Profile() {
                   </p>
                   <Link
                     to="/roadmap"
+                    state={{ roadmapData: item }}
                     className="inline-flex items-center gap-2 text-indigo-600 font-bold text-sm"
                   >
                     View Details <ChevronRight size={16} />

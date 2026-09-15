@@ -21,10 +21,12 @@ export default function News() {
     try {
       setLoading(true);
       setError(null);
-      const res = await axios.get(
-        `https://newsapi.org/v2/everything?q=Tech in India&sortBy=publishedAt&apiKey=${apiKey}`
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/news/tech/`
       );
-      setNews(res.data.articles || []);
+
+      setNews(response.data.articles);
+      // setNews(res.data.articles || []);
     } catch (err) {
       console.error("Failed to fetch news", err);
       setError("Could not load news at this time. Please try again later.");
