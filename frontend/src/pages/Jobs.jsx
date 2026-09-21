@@ -15,48 +15,92 @@ import {
   X,
 } from "lucide-react";
 
+const realCompanies = ["Google", "Microsoft", "Amazon", "Meta", "Netflix", "Apple", "Uber", "Airbnb", "Spotify", "Stripe", "OpenAI", "Tesla", "Nvidia", "Adobe", "Salesforce", "Atlassian", "Slack", "GitHub", "Vercel", "Figma"];
+const roles = [
+  "Senior Frontend Engineer", "React Developer", "UI/UX Engineer", "Frontend Architect",
+  "Backend Software Engineer", "Node.js Developer", "Python Backend Engineer", "Golang Developer",
+  "Full Stack Developer", "MERN Stack Engineer", "Software Engineer - Fullstack",
+  "Machine Learning Engineer", "AI Researcher", "Data Scientist", "NLP Engineer",
+  "DevOps Engineer", "Site Reliability Engineer", "Cloud Architect",
+  "iOS Developer", "Android Engineer", "React Native Developer",
+  "Product Designer", "UX Researcher"
+];
+const locations = ["Remote", "Bengaluru", "San Francisco, CA", "New York, NY", "London, UK", "Seattle, WA", "Austin, TX", "Toronto, Canada", "Berlin, Germany", "Singapore"];
+const tagsList = [["React", "TypeScript", "Tailwind"], ["Python", "Django", "PostgreSQL"], ["Node.js", "Express", "MongoDB"], ["Figma", "UI/UX", "Prototyping"], ["AWS", "Docker", "Kubernetes"], ["TensorFlow", "PyTorch", "Python"], ["Swift", "iOS", "Xcode"], ["Kotlin", "Android", "Java"], ["Vue.js", "Nuxt", "CSS"], ["Go", "Microservices", "gRPC"]];
+
+const descriptions = [
+  "We are looking for an experienced engineer to join our core team. You will be responsible for building highly scalable systems and delivering exceptional user experiences. The ideal candidate has a strong background in modern web technologies and a passion for solving complex problems.",
+  "Join our fast-paced startup where you'll have a massive impact from day one. We are building the next generation of our product and need talented developers to help architect and implement new features. You'll work closely with product managers and designers in an agile environment.",
+  "As a key member of our engineering team, you will design, develop, and maintain critical infrastructure. We value clean code, automated testing, and continuous deployment. If you love optimizing performance and working with distributed systems, this role is for you."
+];
+
+const generateJobs = () => {
+  const generatedJobs = [];
+  for (let i = 1; i <= 50; i++) {
+    const title = roles[(i * 3) % roles.length];
+    const company = realCompanies[(i * 7) % realCompanies.length];
+    const location = locations[(i * 5) % locations.length];
+    const tags = tagsList[(i * 2) % tagsList.length];
+    const salary = `₹${15 + (i % 25)}L - ₹${30 + (i % 30)}L`;
+    const type = i % 4 === 0 ? "Contract" : (i % 7 === 0 ? "Internship" : "Full-time");
+    const desc = descriptions[i % descriptions.length];
+    
+    generatedJobs.push({
+      id: i,
+      title: title,
+      company: company,
+      location: location,
+      salary: salary,
+      type: type,
+      posted: `${(i % 5) + 1} days ago`,
+      logo: `https://api.dicebear.com/7.x/initials/svg?seed=${company.substring(0, 2)}&backgroundColor=${['4f46e5', 'ec4899', '8b5cf6', '10b981', 'f59e0b'][i % 5]}`,
+      tags: tags,
+      description: desc + "\n\nRequirements:\n- 3+ years of relevant experience\n- Strong problem-solving skills\n- Excellent communication abilities\n- Ability to work independently and as part of a team."
+    });
+  }
+  return generatedJobs;
+};
+
+const initialJobs = generateJobs();
+
 export default function Jobs() {
-  const [jobs, setJobs] = useState([
-    {
-      id: 1,
-      title: "Senior Frontend Developer",
-      company: "TechFlow Systems",
-      location: "Remote / Bengaluru",
-      salary: "₹24L - ₹36L",
-      type: "Full-time",
-      posted: "2 days ago",
-      logo: "https://api.dicebear.com/7.x/initials/svg?seed=TF&backgroundColor=4f46e5",
-      tags: ["React", "TypeScript", "Tailwind"],
-    },
-    {
-      id: 2,
-      title: "Product Designer",
-      company: "Creative Labs",
-      location: "Mumbai, India",
-      salary: "₹18L - ₹28L",
-      type: "Contract",
-      posted: "5 hours ago",
-      logo: "https://api.dicebear.com/7.x/initials/svg?seed=CL&backgroundColor=ec4899",
-      tags: ["Figma", "UI/UX", "Animation"],
-    },
-    {
-      id: 3,
-      title: "Full Stack Engineer",
-      company: "DataSync Inc",
-      location: "Hyderabad / Remote",
-      salary: "₹20L - ₹32L",
-      type: "Full-time",
-      posted: "1 day ago",
-      logo: "https://api.dicebear.com/7.x/initials/svg?seed=DS&backgroundColor=8b5cf6",
-      tags: ["MERN", "AWS", "Next.js"],
-    },
-  ]);
+  const [jobs, setJobs] = useState(initialJobs);
 
   const [loading, setLoading] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  
+  // Job Details Modal State
+  const [selectedJob, setSelectedJob] = useState(null);
+  
+  // Application Toast State
+  const [showToast, setShowToast] = useState(false);
+  
+  // Search and Pagination States
+  const [searchInput, setSearchInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 10;
 
   const toggleFilters = () => setShowFilters(!showFilters);
+
+  // Trigger Search when button is clicked
+  const handleSearch = () => {
+    setSearchQuery(searchInput);
+    setCurrentPage(1); // Reset to first page on search
+  };
+
+  // Filter jobs based on search query
+  const filteredJobs = jobs.filter(job => 
+    job.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    job.company.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    job.location.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Pagination logic
+  const indexOfLastJob = currentPage * jobsPerPage;
+  const indexOfFirstJob = indexOfLastJob - jobsPerPage;
+  const currentJobs = filteredJobs.slice(indexOfFirstJob, indexOfLastJob);
+  const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -82,21 +126,15 @@ export default function Jobs() {
                 type="text"
                 placeholder="Job title, keywords, or company..."
                 className="w-full pl-14 pr-6 py-5 bg-white border border-slate-200 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-lg"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
               />
             </div>
-            <div className="relative group w-full lg:w-72">
-              <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-600 transition-colors">
-                <MapPin size={24} />
-              </div>
-              <input
-                type="text"
-                placeholder="Location"
-                className="w-full pl-14 pr-6 py-5 bg-white border border-slate-200 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-lg"
-              />
-            </div>
-            <button className="px-8 py-5 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 flex items-center justify-center gap-2">
+            <button 
+              onClick={handleSearch}
+              className="px-8 py-5 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 flex items-center justify-center gap-2"
+            >
               Search Jobs
             </button>
           </div>
@@ -130,7 +168,7 @@ export default function Jobs() {
           <main className="flex-1 space-y-6">
             <div className="flex items-center justify-between mb-8">
               <h2 className="text-xl font-bold text-slate-900">
-                Showing {jobs.length} relevant opportunities
+                Showing {filteredJobs.length} relevant opportunities
               </h2>
               <button
                 onClick={toggleFilters}
@@ -141,13 +179,39 @@ export default function Jobs() {
               </button>
             </div>
 
-            {jobs.map((job) => (
-              <JobCard key={job.id} job={job} />
-            ))}
+            {currentJobs.length > 0 ? (
+              currentJobs.map((job) => (
+                <JobCard key={job.id} job={job} onViewDetails={() => setSelectedJob(job)} />
+              ))
+            ) : (
+              <div className="text-center py-12 bg-white rounded-3xl border border-slate-100">
+                <h3 className="text-xl font-bold text-slate-700 mb-2">No jobs found</h3>
+                <p className="text-slate-500">Try adjusting your search criteria.</p>
+              </div>
+            )}
 
-            <button className="w-full py-4 bg-white border border-slate-200 rounded-2xl font-bold text-slate-600 hover:bg-slate-50 transition">
-              Load More Opportunities
-            </button>
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center gap-4 pt-6">
+                <button 
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  className="px-6 py-3 bg-white border border-slate-200 rounded-xl font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                >
+                  Previous
+                </button>
+                <span className="font-bold text-slate-700">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button 
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  className="px-6 py-3 bg-white border border-slate-200 rounded-xl font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </main>
         </div>
       </div>
@@ -180,6 +244,102 @@ export default function Jobs() {
                 <FilterOption label="Mid-Senior" count="156" checked />
               </FilterSection>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Job Details Modal */}
+      {selectedJob && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
+          <div 
+            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200"
+            onClick={() => setSelectedJob(null)}
+          ></div>
+          <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+            
+            {/* Modal Header */}
+            <div className="flex items-start justify-between p-6 border-b border-slate-100 shrink-0">
+              <div className="flex gap-4">
+                <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center border border-slate-100 shrink-0">
+                  <img src={selectedJob.logo} alt={selectedJob.company} className="rounded-xl w-full h-full object-cover" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-900">{selectedJob.title}</h2>
+                  <p className="text-lg text-slate-600 font-medium">{selectedJob.company}</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setSelectedJob(null)} 
+                className="p-2 text-slate-400 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-full transition shrink-0"
+              >
+                <X size={24} />
+              </button>
+            </div>
+            
+            {/* Modal Body */}
+            <div className="p-6 overflow-y-auto space-y-6 flex-1">
+              <div className="flex flex-wrap gap-4 text-slate-600 text-sm font-medium bg-slate-50 p-4 rounded-2xl border border-slate-100">
+                <div className="flex items-center gap-1.5"><MapPin size={18} className="text-slate-400" />{selectedJob.location}</div>
+                <div className="flex items-center gap-1.5"><DollarSign size={18} className="text-slate-400" />{selectedJob.salary}</div>
+                <div className="flex items-center gap-1.5"><Briefcase size={18} className="text-slate-400" />{selectedJob.type}</div>
+                <div className="flex items-center gap-1.5"><Clock size={18} className="text-slate-400" />Posted {selectedJob.posted}</div>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-bold text-slate-900 mb-3">About the Role</h3>
+                <p className="text-slate-600 whitespace-pre-line leading-relaxed">
+                  {selectedJob.description}
+                </p>
+              </div>
+              
+              <div>
+                <h3 className="text-lg font-bold text-slate-900 mb-3">Required Skills & Tech Stack</h3>
+                <div className="flex flex-wrap gap-2">
+                  {selectedJob.tags.map(tag => (
+                    <span key={tag} className="px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-lg text-sm font-bold border border-indigo-100">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            {/* Modal Footer */}
+            <div className="p-6 border-t border-slate-100 bg-white rounded-b-3xl flex flex-col sm:flex-row justify-end gap-3 shrink-0">
+              <button 
+                onClick={() => setSelectedJob(null)} 
+                className="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold hover:bg-slate-50 transition"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={() => {
+                  setShowToast(true);
+                  setTimeout(() => {
+                    setShowToast(false);
+                    setSelectedJob(null);
+                  }, 2500);
+                }}
+                className="px-8 py-3 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition"
+              >
+                Apply Now
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Success Toast */}
+      {showToast && (
+        <div className="fixed bottom-8 right-8 lg:bottom-12 lg:right-12 z-[150] bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 animate-in slide-in-from-bottom-8 fade-in duration-300">
+          <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shrink-0">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
+            </svg>
+          </div>
+          <div>
+            <p className="font-bold text-white text-base">Application Submitted!</p>
+            <p className="text-slate-400 text-sm font-medium">The company will review your profile.</p>
           </div>
         </div>
       )}
@@ -217,7 +377,7 @@ function FilterOption({ label, count, checked = false }) {
   );
 }
 
-function JobCard({ job }) {
+function JobCard({ job, onViewDetails }) {
   return (
     <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 hover:shadow-md hover:border-indigo-200 transition group relative overflow-hidden">
       <div className="flex flex-col md:flex-row gap-6">
@@ -279,7 +439,10 @@ function JobCard({ job }) {
 
         {/* Action Button */}
         <div className="flex flex-col justify-end md:justify-center">
-          <button className="px-6 py-3 bg-indigo-50 text-indigo-700 rounded-2xl font-bold hover:bg-indigo-600 hover:text-white transition-all flex items-center justify-center gap-2">
+          <button 
+            onClick={onViewDetails}
+            className="px-6 py-3 bg-indigo-50 text-indigo-700 rounded-2xl font-bold hover:bg-indigo-600 hover:text-white transition-all flex items-center justify-center gap-2"
+          >
             View Details
             <ChevronRight size={18} />
           </button>
