@@ -29,18 +29,22 @@ export default function Auth() {
     password: e.target[1].value,
   };
 
-  let res = await axios.post(`${api}/api/auth/login`, data);
+  try {
+    let res = await axios.post(`${api}/api/auth/login`, data);
 
-  if (res.status == 200) {
-    const { access_token, refresh_token } = res.data; // <-- changed from res.data.data
+    if (res.status == 200) {
+      const { access_token, refresh_token } = res.data;
 
-    localStorage.setItem("access_token", access_token);
-    localStorage.setItem("refresh_token", refresh_token);
+      localStorage.setItem("access_token", access_token);
+      localStorage.setItem("refresh_token", refresh_token);
 
-    navigate("/profile");
-    success(res.data.message);
-  } else {
-    error(res.data.message);
+      navigate("/profile");
+      success(res.data.message || "Successfully logged in!");
+    }
+  } catch (err) {
+    console.error(err.response?.data);
+    // Display the exact error message from the backend (e.g. "Password is wrong")
+    error(err.response?.data?.message || "Invalid email or password");
   }
 }
 

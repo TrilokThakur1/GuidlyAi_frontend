@@ -601,6 +601,19 @@ export function OrbitalHeroSection({
       pointerX = ((ev.clientX - rect.left) / rect.width - 0.5) * 2;
       pointerY = ((ev.clientY - rect.top) / rect.height - 0.5) * 2;
     }
+    
+    function onDeviceOrientation(ev: DeviceOrientationEvent) {
+      if (!props.current.interactive) return;
+      if (ev.gamma === null || ev.beta === null) return;
+      // Gamma is left/right (-90 to 90). Cap at -45 to 45.
+      const gamma = Math.max(-45, Math.min(45, ev.gamma));
+      // Beta is front/back (0 to 180 for standard hold). Normal hold is ~45deg.
+      const beta = Math.max(0, Math.min(90, ev.beta));
+      
+      pointerX = gamma / 45;
+      pointerY = (beta - 45) / 45;
+    }
+
     function onLeave() { pointerX = 0; pointerY = 0; }
 
     /* --- the star at the centre ------------------------------------------ */
@@ -938,6 +951,7 @@ export function OrbitalHeroSection({
     document.addEventListener("visibilitychange", onVisibility);
     window.addEventListener("pointermove", onPointer);
     window.addEventListener("pointerleave", onLeave);
+    window.addEventListener("deviceorientation", onDeviceOrientation as EventListener);
 
     return () => {
       running = false;
@@ -947,6 +961,7 @@ export function OrbitalHeroSection({
       document.removeEventListener("visibilitychange", onVisibility);
       window.removeEventListener("pointermove", onPointer);
       window.removeEventListener("pointerleave", onLeave);
+      window.removeEventListener("deviceorientation", onDeviceOrientation as EventListener);
     };
   }, []);
 
