@@ -81,45 +81,45 @@ export default function Profile() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="min-h-screen flex items-center justify-center bg-transparent w-full">
         <div className="animate-pulse flex flex-col items-center">
-          <div className="w-12 h-12 bg-indigo-200 rounded-full mb-4"></div>
-          <div className="h-4 w-32 bg-slate-200 rounded"></div>
+          <div className="w-12 h-12 bg-white/20 rounded-full mb-4"></div>
+          <div className="h-4 w-32 bg-white/10 rounded"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-6">
-      <div className="max-w-4xl mx-auto space-y-8 text-slate-900">
+    <div className="min-h-screen bg-transparent py-12 px-6 w-full">
+      <div className="max-w-4xl mx-auto space-y-8 text-white">
         {/* Simple Profile Info */}
-        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
+        <div className="bg-black/30 backdrop-blur-xl rounded-3xl shadow-xl border border-white/10 p-8 md:p-10 flex flex-col md:flex-row items-center gap-8">
           <img
             src={
               user.avatar
                 ? user.avatar.startsWith("http")
                   ? user.avatar // already full URL
                   : `${api}${user.avatar}` // relative path → prepend API base
-                : `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6366f1&color=fff` // fallback
+                : `https://api.dicebear.com/9.x/glass/svg?seed=${encodeURIComponent(user.name || "User")}` // fallback
             }
             alt="avatar"
-            className="w-32 h-32 rounded-3xl border-2 border-slate-100 shadow-sm object-cover"
+            className="w-32 h-32 rounded-3xl border border-white/20 shadow-sm object-cover bg-white/5 p-2"
             onError={(e) => {
-              e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=6366f1&color=fff`;
+              e.target.src = `https://api.dicebear.com/9.x/glass/svg?seed=${encodeURIComponent(user.name || "User")}`;
             }}
           />
           <div className="flex-1 text-center md:text-left space-y-2">
-            <h1 className="text-3xl font-bold">{user.name}</h1>
-            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 text-slate-500 font-medium">
+            <h1 className="text-3xl font-bold text-white">{user.name}</h1>
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 text-white/60 font-medium">
               <span className="flex items-center justify-center md:justify-start gap-2">
-                <Mail size={18} className="text-slate-400" />
+                <Mail size={18} className="text-white/40" />
                 {user.email}
               </span>
               <span className="flex items-center justify-center md:justify-start gap-2">
-                <User size={18} className="text-slate-400" />
+                <User size={18} className="text-white/40" />
                 ID:{" "}
-                <span className="text-slate-400 font-mono text-xs">
+                <span className="text-white/40 font-mono text-xs">
                   {user.id}
                 </span>
               </span>
@@ -127,7 +127,7 @@ export default function Profile() {
           </div>
           <button
             onClick={handleLogout}
-            className="px-6 py-3 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition flex items-center gap-2 shrink-0 shadow-lg shadow-slate-100"
+            className="px-6 py-3 bg-red-500/80 backdrop-blur-md text-white rounded-2xl font-bold hover:bg-red-600 transition flex items-center gap-2 shrink-0 border border-red-500/50"
           >
             <LogOut size={18} />
             Logout
@@ -137,20 +137,20 @@ export default function Profile() {
         {/* Roadmap History */}
         <div className="space-y-6">
           <div className="flex items-center justify-between px-2">
-            <h2 className="text-2xl font-bold flex items-center gap-3">
-              <Map className="text-indigo-600" />
+            <h2 className="text-2xl font-bold flex items-center gap-3 text-white">
+              <Map className="text-indigo-400" />
               Your Roadmaps
             </h2>
             <Link
               to="/roadmap"
-              className="text-indigo-600 font-bold flex items-center gap-1 hover:gap-2 transition-all"
+              className="text-indigo-400 font-bold flex items-center gap-1 hover:gap-2 transition-all"
             >
               Generate New <ChevronRight size={20} />
             </Link>
           </div>
 
           {roadmaps.length === 0 ? (
-            <div className="bg-white rounded-3xl border border-dashed border-slate-200 p-12 text-center text-slate-400 font-medium">
+            <div className="bg-black/30 backdrop-blur-xl rounded-3xl border border-dashed border-white/20 p-12 text-center text-white/50 font-medium">
               No roadmaps found. Get started by generating your first path!
             </div>
           ) : (
@@ -158,22 +158,22 @@ export default function Profile() {
               {roadmaps.map((item, i) => (
                 <div
                   key={i}
-                  className="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 hover:border-indigo-100 transition group"
+                  className="bg-black/30 backdrop-blur-xl p-6 rounded-3xl shadow-xl border border-white/10 hover:border-indigo-400/50 hover:bg-black/40 transition group"
                 >
-                  <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                  <div className="w-10 h-10 bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-xl flex items-center justify-center mb-4 group-hover:bg-indigo-500/40 transition-colors">
                     <Navigation size={20} className="rotate-45" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2 line-clamp-1">
+                  <h3 className="text-lg font-bold mb-2 line-clamp-1 text-white">
                     {item.roadmapTitle || "Untitled Roadmap"}
                   </h3>
 
-                  <p className="text-sm text-slate-500 line-clamp-2">
+                  <p className="text-sm text-white/60 line-clamp-2">
                     {item.roadmapDesc}
                   </p>
                   <Link
                     to="/roadmap"
                     state={{ roadmapData: item }}
-                    className="inline-flex items-center gap-2 text-indigo-600 font-bold text-sm"
+                    className="inline-flex items-center gap-2 text-indigo-400 mt-4 font-bold text-sm group-hover:text-indigo-300"
                   >
                     View Details <ChevronRight size={16} />
                   </Link>

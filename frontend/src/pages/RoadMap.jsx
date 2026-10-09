@@ -81,15 +81,15 @@ export default function RoadMap() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-transparent w-full">
       {/* Header Section */}
-      <section className="bg-white border-b border-slate-100 pt-12 pb-16 lg:pt-20 lg:pb-24">
+      <section className="bg-black/20 backdrop-blur-lg border-b border-white/10 pt-12 pb-16 lg:pt-20 lg:pb-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h1 className="text-4xl lg:text-5xl font-extrabold text-slate-900 mb-6">
-              Your Professional <span className="text-indigo-600">Roadmap</span>
+            <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-6">
+              Your Professional <span className="text-indigo-400">Roadmap</span>
             </h1>
-            <p className="text-lg text-slate-600">
+            <p className="text-lg text-white/70">
               Enter your career goal or a skill you want to master, and our AI
               will generate a step-by-step path for you.
             </p>
@@ -98,7 +98,7 @@ export default function RoadMap() {
           {/* Form */}
           <div className="max-w-2xl mx-auto">
             <form onSubmit={handleSubmit} className="relative group">
-              <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-600 transition-colors">
+              <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-white/50 group-focus-within:text-indigo-400 transition-colors">
                 <Search size={24} />
               </div>
               <input
@@ -107,12 +107,12 @@ export default function RoadMap() {
                 name="roadmap"
                 required
                 placeholder="e.g. Senior Frontend Developer, Data Science, MERN"
-                className="w-full pl-14 pr-36 py-5 bg-white border border-slate-200 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-lg"
+                className="w-full pl-14 pr-36 py-5 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all text-lg text-white placeholder-white/40"
               />
               <button
                 type="submit"
                 disabled={loading}
-                className="absolute right-3 top-2.5 px-6 py-2.5 bg-indigo-600 text-white rounded-xl font-semibold hover:bg-indigo-700 transition disabled:opacity-60 flex items-center gap-2"
+                className="absolute right-3 top-2.5 px-6 py-2.5 bg-indigo-500 text-white rounded-xl font-semibold hover:bg-indigo-600 transition disabled:opacity-60 flex items-center gap-2 shadow-lg shadow-indigo-500/20"
               >
                 {loading ? (
                   <Loader2 className="animate-spin" size={20} />
@@ -130,10 +130,10 @@ export default function RoadMap() {
       <div className="max-w-4xl mx-auto px-6 py-12">
         {loading && (
           <div className="flex flex-col items-center justify-center py-20 animate-in fade-in duration-500">
-            <div className="w-16 h-16 bg-indigo-100 rounded-2xl flex items-center justify-center text-indigo-600 mb-4">
+            <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center text-indigo-400 mb-4 border border-white/20">
               <Loader2 className="animate-spin" size={32} />
             </div>
-            <p className="text-lg font-medium text-slate-600">
+            <p className="text-lg font-medium text-white/60">
               Mapping out your future...
             </p>
           </div>
@@ -142,49 +142,49 @@ export default function RoadMap() {
         {roadmap && !loading && (
           <div className="space-y-12 animate-in slide-in-from-bottom-8 duration-700">
             {/* Summary Card */}
-            <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-8 text-slate-100 -mr-8 -mt-8">
+            <div className="bg-black/30 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-8 text-white/5 -mr-8 -mt-8">
                 <Map size={120} />
               </div>
               <div className="relative">
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-sm font-bold mb-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-indigo-500/20 text-indigo-300 rounded-full text-sm font-bold mb-4 border border-indigo-500/30">
                   <CheckCircle2 size={16} />
                   Strategy Ready
                 </div>
-                <h2 className="text-3xl font-bold text-slate-900 mb-4">
+                <h2 className="text-3xl font-bold text-white mb-4">
                   {roadmap.roadmapTitle}
                 </h2>
-                <div className="text-xl font-medium text-slate-700 mb-4">
+                <div className="text-xl font-medium text-white/80 mb-4">
                   {roadmap.greetings}
                 </div>
-                <p className="text-slate-600 leading-relaxed text-lg italic border-l-4 border-indigo-200 pl-4">
+                <p className="text-white/60 leading-relaxed text-lg italic border-l-4 border-indigo-500/50 pl-4">
                   "{roadmap.roadmapDesc}"
                 </p>
               </div>
             </div>
 
             {/* Timeline Steps */}
-            <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-linear-to-b before:from-indigo-600 before:via-purple-500 before:to-pink-500">
+            <div className="relative space-y-8 before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-linear-to-b before:from-indigo-500 before:via-purple-500 before:to-pink-500">
               {roadmap?.roadmapSteps?.map((step, index) => (
                 <div
                   key={index}
                   className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active"
                 >
                   {/* Dot */}
-                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white bg-slate-100 group-[.is-active]:bg-indigo-600 text-slate-500 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 transition-colors">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full border border-white/20 bg-black group-[.is-active]:bg-indigo-500 text-white/50 group-[.is-active]:text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 transition-colors">
                     <span className="font-bold text-sm">{index + 1}</span>
                   </div>
                   {/* Card */}
-                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-6 rounded-2xl shadow-sm border border-slate-100 group-hover:border-indigo-200 transition-colors">
+                  <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-black/30 backdrop-blur-xl p-6 rounded-2xl shadow-xl border border-white/10 group-hover:border-indigo-400/50 transition-colors">
                     <div className="flex items-center justify-between gap-2 mb-2">
-                      <h3 className="font-bold text-slate-900 text-xl">
+                      <h3 className="font-bold text-white text-xl">
                         {step.stepTitle}
                       </h3>
-                      <time className="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md shrink-0">
+                      <time className="text-xs font-bold uppercase tracking-wider text-indigo-300 bg-indigo-500/20 border border-indigo-500/30 px-2 py-1 rounded-md shrink-0">
                         {step.stepEstimatedTime}
                       </time>
                     </div>
-                    <p className="text-slate-600 text-sm leading-relaxed">
+                    <p className="text-white/60 text-sm leading-relaxed">
                       {step.stepDesc}
                     </p>
                   </div>
@@ -196,29 +196,29 @@ export default function RoadMap() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16">
               {/* Books */}
               {roadmap?.resources?.books?.length > 0 && (
-                <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 h-full">
+                <div className="bg-black/30 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/10 h-full">
                   <div className="flex items-center gap-3 mb-8">
-                    <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+                    <div className="w-10 h-10 bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 rounded-xl flex items-center justify-center">
                       <BookOpen size={20} />
                     </div>
-                    <h2 className="text-2xl font-bold text-slate-900">
+                    <h2 className="text-2xl font-bold text-white">
                       Recommended Books
                     </h2>
                   </div>
                   <div className="space-y-6">
                     {roadmap.resources.books.map((book, index) => (
                       <div key={index} className="group cursor-default">
-                        <h3 className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                        <h3 className="font-bold text-white group-hover:text-indigo-400 transition-colors">
                           {book.bookTitle}
                         </h3>
-                        <p className="text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wide">
+                        <p className="text-xs font-semibold text-white/40 mb-2 uppercase tracking-wide">
                           By {book.bookAuthor}
                         </p>
-                        <p className="text-sm text-slate-600 leading-relaxed">
+                        <p className="text-sm text-white/60 leading-relaxed">
                           {book.bookDesc}
                         </p>
                         {index !== roadmap.resources.books.length - 1 && (
-                          <div className="mt-6 border-b border-slate-50"></div>
+                          <div className="mt-6 border-b border-white/10"></div>
                         )}
                       </div>
                     ))}
@@ -228,12 +228,12 @@ export default function RoadMap() {
 
               {/* Videos */}
               {roadmap?.resources?.videos?.length > 0 && (
-                <div className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 h-full">
+                <div className="bg-black/30 backdrop-blur-xl p-8 rounded-3xl shadow-xl border border-white/10 h-full">
                   <div className="flex items-center gap-3 mb-8">
-                    <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center">
+                    <div className="w-10 h-10 bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 rounded-xl flex items-center justify-center">
                       <Video size={20} />
                     </div>
-                    <h2 className="text-2xl font-bold text-slate-900">
+                    <h2 className="text-2xl font-bold text-white">
                       Video Tutorials
                     </h2>
                   </div>
@@ -244,12 +244,12 @@ export default function RoadMap() {
                         href={video}
                         target="_blank"
                         rel="noreferrer"
-                        className="flex items-center gap-3 p-4 rounded-2xl bg-slate-50 border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 transition-all group"
+                        className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-indigo-400/50 hover:bg-indigo-500/10 transition-all group"
                       >
-                        <div className="w-8 h-8 bg-white text-slate-400 group-hover:text-indigo-600 rounded-lg flex items-center justify-center shadow-sm">
+                        <div className="w-8 h-8 bg-black/50 text-white/60 group-hover:text-indigo-400 rounded-lg flex items-center justify-center shadow-sm border border-white/10">
                           <Play size={16} fill="currentColor" />
                         </div>
-                        <span className="text-sm font-medium text-slate-600 group-hover:text-indigo-700 truncate">
+                        <span className="text-sm font-medium text-white/70 group-hover:text-indigo-300 truncate">
                           {
                             video
                               .replace(/https?:\/\/(www\.)?/, "")
@@ -265,7 +265,7 @@ export default function RoadMap() {
             </div>
 
             {/* Last Words */}
-            <div className="bg-indigo-600 p-8 rounded-3xl text-center text-white relative overflow-hidden">
+            <div className="bg-indigo-600/80 backdrop-blur-md p-8 rounded-3xl text-center text-white relative overflow-hidden border border-indigo-500/50">
               <div className="absolute top-0 left-0 w-32 h-32 bg-white/10 -ml-16 -mt-16 rounded-full blur-2xl"></div>
               <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 -mr-16 -mt-16 rounded-full blur-2xl"></div>
               <div className="relative">

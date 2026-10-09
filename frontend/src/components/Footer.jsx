@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-300 py-12 border-t border-slate-800">
+    <footer className="bg-black/40 backdrop-blur-md text-white/70 py-12 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <h2 className="text-2xl font-extrabold text-white mb-4">GuidlyAi</h2>
-            <p className="text-slate-400 mb-6 max-w-sm">
+            <p className="text-white/60 mb-6 max-w-sm">
               Your ultimate platform for career growth. Discover roadmaps, industry news, and find your dream job.
             </p>
           </div>
@@ -33,7 +33,7 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="mt-12 pt-8 border-t border-slate-800 text-center text-sm text-slate-500">
+        <div className="mt-12 pt-8 border-t border-white/10 text-center text-sm text-white/40">
           <p>&copy; {new Date().getFullYear()} GuidlyAi. All rights reserved.</p>
         </div>
       </div>

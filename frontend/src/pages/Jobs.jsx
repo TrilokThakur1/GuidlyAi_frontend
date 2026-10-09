@@ -103,15 +103,15 @@ export default function Jobs() {
   const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-transparent w-full">
       {/* Search & Header Section */}
-      <section className="bg-white border-b border-slate-100 pt-12 pb-16 lg:pt-20">
+      <section className="bg-black/20 backdrop-blur-lg border-b border-white/10 pt-12 pb-16 lg:pt-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="max-w-3xl mb-12">
-            <h1 className="text-4xl lg:text-5xl font-extrabold text-slate-900 mb-6">
-              Find Your Next <span className="text-indigo-600">Greatness</span>
+            <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-6">
+              Find Your Next <span className="text-indigo-400">Greatness</span>
             </h1>
-            <p className="text-lg text-slate-600">
+            <p className="text-lg text-white/70">
               Discover opportunities that align with your career roadmap and
               professional aspirations.
             </p>
@@ -119,13 +119,13 @@ export default function Jobs() {
 
           <div className="flex flex-col lg:flex-row gap-4">
             <div className="flex-1 relative group">
-              <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-indigo-600 transition-colors">
+              <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-white/50 group-focus-within:text-indigo-400 transition-colors">
                 <Search size={24} />
               </div>
               <input
                 type="text"
                 placeholder="Job title, keywords, or company..."
-                className="w-full pl-14 pr-6 py-5 bg-white border border-slate-200 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-lg"
+                className="w-full pl-14 pr-6 py-5 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition-all text-lg text-white placeholder-white/40"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
@@ -133,7 +133,7 @@ export default function Jobs() {
             </div>
             <button 
               onClick={handleSearch}
-              className="px-8 py-5 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-100 flex items-center justify-center gap-2"
+              className="px-8 py-5 bg-indigo-500 text-white rounded-2xl font-bold hover:bg-indigo-600 transition shadow-lg shadow-indigo-500/20 flex items-center justify-center gap-2"
             >
               Search Jobs
             </button>
@@ -167,12 +167,12 @@ export default function Jobs() {
           {/* Jobs List */}
           <main className="flex-1 space-y-6">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-bold text-slate-900">
+              <h2 className="text-xl font-bold text-white">
                 Showing {filteredJobs.length} relevant opportunities
               </h2>
               <button
                 onClick={toggleFilters}
-                className="lg:hidden flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-slate-600 font-semibold"
+                className="lg:hidden flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white font-semibold hover:bg-white/20 transition"
               >
                 <SlidersHorizontal size={18} />
                 Filters
@@ -184,9 +184,9 @@ export default function Jobs() {
                 <JobCard key={job.id} job={job} onViewDetails={() => setSelectedJob(job)} />
               ))
             ) : (
-              <div className="text-center py-12 bg-white rounded-3xl border border-slate-100">
-                <h3 className="text-xl font-bold text-slate-700 mb-2">No jobs found</h3>
-                <p className="text-slate-500">Try adjusting your search criteria.</p>
+              <div className="text-center py-12 bg-black/30 backdrop-blur-xl rounded-3xl border border-white/10">
+                <h3 className="text-xl font-bold text-white mb-2">No jobs found</h3>
+                <p className="text-white/60">Try adjusting your search criteria.</p>
               </div>
             )}
 
@@ -196,17 +196,17 @@ export default function Jobs() {
                 <button 
                   onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                   disabled={currentPage === 1}
-                  className="px-6 py-3 bg-white border border-slate-200 rounded-xl font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                  className="px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl font-bold text-white hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition"
                 >
                   Previous
                 </button>
-                <span className="font-bold text-slate-700">
+                <span className="font-bold text-white/80">
                   Page {currentPage} of {totalPages}
                 </span>
                 <button 
                   onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                   disabled={currentPage === totalPages}
-                  className="px-6 py-3 bg-white border border-slate-200 rounded-xl font-bold text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                  className="px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl font-bold text-white hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition"
                 >
                   Next
                 </button>
@@ -220,15 +220,15 @@ export default function Jobs() {
       {showFilters && (
         <div className="fixed inset-0 z-50 lg:hidden animate-in fade-in duration-300">
           <div
-            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={toggleFilters}
           ></div>
-          <div className="absolute right-0 top-0 h-full w-80 bg-white p-6 shadow-2xl animate-in slide-in-from-right duration-300">
+          <div className="absolute right-0 top-0 h-full w-80 bg-black/80 backdrop-blur-2xl border-l border-white/10 p-6 shadow-2xl animate-in slide-in-from-right duration-300">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-xl font-bold text-slate-900">Filters</h2>
+              <h2 className="text-xl font-bold text-white">Filters</h2>
               <button
                 onClick={toggleFilters}
-                className="p-2 text-slate-400 hover:text-slate-900"
+                className="p-2 text-white/50 hover:text-white"
               >
                 <X size={24} />
               </button>
@@ -252,25 +252,25 @@ export default function Jobs() {
       {selectedJob && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
           <div 
-            className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-200"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
             onClick={() => setSelectedJob(null)}
           ></div>
-          <div className="relative bg-white rounded-3xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative bg-black/80 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl w-full max-w-3xl max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
             
             {/* Modal Header */}
-            <div className="flex items-start justify-between p-6 border-b border-slate-100 shrink-0">
+            <div className="flex items-start justify-between p-6 border-b border-white/10 shrink-0">
               <div className="flex gap-4">
-                <div className="w-16 h-16 bg-slate-50 rounded-2xl flex items-center justify-center border border-slate-100 shrink-0">
+                <div className="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 shrink-0">
                   <img src={selectedJob.logo} alt={selectedJob.company} className="rounded-xl w-full h-full object-cover" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-slate-900">{selectedJob.title}</h2>
-                  <p className="text-lg text-slate-600 font-medium">{selectedJob.company}</p>
+                  <h2 className="text-2xl font-bold text-white">{selectedJob.title}</h2>
+                  <p className="text-lg text-white/70 font-medium">{selectedJob.company}</p>
                 </div>
               </div>
               <button 
                 onClick={() => setSelectedJob(null)} 
-                className="p-2 text-slate-400 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-full transition shrink-0"
+                className="p-2 text-white/50 hover:text-white bg-white/5 hover:bg-white/10 rounded-full transition shrink-0"
               >
                 <X size={24} />
               </button>
@@ -278,25 +278,25 @@ export default function Jobs() {
             
             {/* Modal Body */}
             <div className="p-6 overflow-y-auto space-y-6 flex-1">
-              <div className="flex flex-wrap gap-4 text-slate-600 text-sm font-medium bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                <div className="flex items-center gap-1.5"><MapPin size={18} className="text-slate-400" />{selectedJob.location}</div>
-                <div className="flex items-center gap-1.5"><DollarSign size={18} className="text-slate-400" />{selectedJob.salary}</div>
-                <div className="flex items-center gap-1.5"><Briefcase size={18} className="text-slate-400" />{selectedJob.type}</div>
-                <div className="flex items-center gap-1.5"><Clock size={18} className="text-slate-400" />Posted {selectedJob.posted}</div>
+              <div className="flex flex-wrap gap-4 text-white/70 text-sm font-medium bg-white/5 p-4 rounded-2xl border border-white/10">
+                <div className="flex items-center gap-1.5"><MapPin size={18} className="text-white/40" />{selectedJob.location}</div>
+                <div className="flex items-center gap-1.5"><DollarSign size={18} className="text-white/40" />{selectedJob.salary}</div>
+                <div className="flex items-center gap-1.5"><Briefcase size={18} className="text-white/40" />{selectedJob.type}</div>
+                <div className="flex items-center gap-1.5"><Clock size={18} className="text-white/40" />Posted {selectedJob.posted}</div>
               </div>
               
               <div>
-                <h3 className="text-lg font-bold text-slate-900 mb-3">About the Role</h3>
-                <p className="text-slate-600 whitespace-pre-line leading-relaxed">
+                <h3 className="text-lg font-bold text-white mb-3">About the Role</h3>
+                <p className="text-white/60 whitespace-pre-line leading-relaxed">
                   {selectedJob.description}
                 </p>
               </div>
               
               <div>
-                <h3 className="text-lg font-bold text-slate-900 mb-3">Required Skills & Tech Stack</h3>
+                <h3 className="text-lg font-bold text-white mb-3">Required Skills & Tech Stack</h3>
                 <div className="flex flex-wrap gap-2">
                   {selectedJob.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1.5 bg-indigo-50 text-indigo-700 rounded-lg text-sm font-bold border border-indigo-100">
+                    <span key={tag} className="px-3 py-1.5 bg-indigo-500/20 text-indigo-300 rounded-lg text-sm font-bold border border-indigo-500/30">
                       {tag}
                     </span>
                   ))}
@@ -305,10 +305,10 @@ export default function Jobs() {
             </div>
             
             {/* Modal Footer */}
-            <div className="p-6 border-t border-slate-100 bg-white rounded-b-3xl flex flex-col sm:flex-row justify-end gap-3 shrink-0">
+            <div className="p-6 border-t border-white/10 bg-white/5 rounded-b-3xl flex flex-col sm:flex-row justify-end gap-3 shrink-0">
               <button 
                 onClick={() => setSelectedJob(null)} 
-                className="px-6 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold hover:bg-slate-50 transition"
+                className="px-6 py-3 bg-transparent border border-white/20 text-white/80 rounded-xl font-bold hover:bg-white/10 transition"
               >
                 Cancel
               </button>
@@ -320,7 +320,7 @@ export default function Jobs() {
                     setSelectedJob(null);
                   }, 2500);
                 }}
-                className="px-8 py-3 bg-indigo-600 text-white rounded-xl font-bold hover:bg-indigo-700 shadow-lg shadow-indigo-100 transition"
+                className="px-8 py-3 bg-indigo-500 text-white rounded-xl font-bold hover:bg-indigo-600 shadow-lg shadow-indigo-500/20 transition"
               >
                 Apply Now
               </button>
@@ -331,7 +331,7 @@ export default function Jobs() {
 
       {/* Success Toast */}
       {showToast && (
-        <div className="fixed bottom-8 right-8 lg:bottom-12 lg:right-12 z-[150] bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 animate-in slide-in-from-bottom-8 fade-in duration-300">
+        <div className="fixed bottom-8 right-8 lg:bottom-12 lg:right-12 z-[150] bg-black/80 backdrop-blur-2xl text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-4 animate-in slide-in-from-bottom-8 fade-in duration-300 border border-white/10">
           <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shrink-0">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
@@ -339,7 +339,7 @@ export default function Jobs() {
           </div>
           <div>
             <p className="font-bold text-white text-base">Application Submitted!</p>
-            <p className="text-slate-400 text-sm font-medium">The company will review your profile.</p>
+            <p className="text-white/60 text-sm font-medium">The company will review your profile.</p>
           </div>
         </div>
       )}
@@ -350,7 +350,7 @@ export default function Jobs() {
 function FilterSection({ title, children }) {
   return (
     <div className="space-y-4">
-      <h3 className="font-bold text-slate-900 uppercase text-xs tracking-wider">
+      <h3 className="font-bold text-white uppercase text-xs tracking-wider">
         {title}
       </h3>
       <div className="space-y-2">{children}</div>
@@ -365,24 +365,24 @@ function FilterOption({ label, count, checked = false }) {
         <input
           type="checkbox"
           checked={checked}
-          className="w-5 h-5 rounded-lg border-slate-300 text-indigo-600 focus:ring-indigo-500"
+          className="w-5 h-5 rounded-lg border-white/30 bg-white/10 text-indigo-500 focus:ring-indigo-500"
           readOnly
         />
-        <span className="text-slate-600 font-medium group-hover:text-indigo-600 transition-colors">
+        <span className="text-white/70 font-medium group-hover:text-indigo-400 transition-colors">
           {label}
         </span>
       </div>
-      <span className="text-slate-400 text-xs font-bold">{count}</span>
+      <span className="text-white/40 text-xs font-bold">{count}</span>
     </label>
   );
 }
 
 function JobCard({ job, onViewDetails }) {
   return (
-    <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-slate-100 hover:shadow-md hover:border-indigo-200 transition group relative overflow-hidden">
+    <div className="bg-black/30 backdrop-blur-xl p-6 md:p-8 rounded-3xl shadow-xl border border-white/10 hover:border-indigo-400/50 hover:bg-black/40 transition-all group relative overflow-hidden">
       <div className="flex flex-col md:flex-row gap-6">
         {/* Company Logo */}
-        <div className="w-16 h-16 md:w-20 md:h-20 bg-slate-50 rounded-2xl shrink-0 flex items-center justify-center p-1 border border-slate-50">
+        <div className="w-16 h-16 md:w-20 md:h-20 bg-white/5 rounded-2xl shrink-0 flex items-center justify-center p-1 border border-white/10">
           <img
             src={job.logo}
             alt={job.company}
@@ -394,33 +394,33 @@ function JobCard({ job, onViewDetails }) {
         <div className="flex-1 space-y-4">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-2">
             <div>
-              <h3 className="text-xl md:text-2xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors uppercase">
+              <h3 className="text-xl md:text-2xl font-bold text-white group-hover:text-indigo-400 transition-colors uppercase">
                 {job.title}
               </h3>
               <div className="flex items-center gap-2 mt-1">
-                <span className="font-bold text-slate-700">{job.company}</span>
-                <span className="flex items-center gap-1 text-amber-500 bg-amber-50 px-2 py-0.5 rounded text-xs font-bold">
+                <span className="font-bold text-white/80">{job.company}</span>
+                <span className="flex items-center gap-1 text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded text-xs font-bold border border-amber-400/20">
                   <Star size={12} fill="currentColor" />
                   4.8
                 </span>
               </div>
             </div>
-            <span className="inline-flex px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-bold self-start">
+            <span className="inline-flex px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/30 rounded-full text-xs font-bold self-start">
               {job.type}
             </span>
           </div>
 
-          <div className="flex flex-wrap gap-4 text-slate-500 text-sm font-medium">
+          <div className="flex flex-wrap gap-4 text-white/60 text-sm font-medium">
             <div className="flex items-center gap-1.5 leading-none">
-              <MapPin size={16} className="text-slate-400" />
+              <MapPin size={16} className="text-white/40" />
               {job.location}
             </div>
             <div className="flex items-center gap-1.5 leading-none">
-              <DollarSign size={16} className="text-slate-400" />
+              <DollarSign size={16} className="text-white/40" />
               {job.salary}
             </div>
             <div className="flex items-center gap-1.5 leading-none">
-              <Clock size={16} className="text-slate-400" />
+              <Clock size={16} className="text-white/40" />
               {job.posted}
             </div>
           </div>
@@ -429,7 +429,7 @@ function JobCard({ job, onViewDetails }) {
             {job.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-slate-50 text-slate-600 rounded-lg text-xs font-bold border border-slate-100"
+                className="px-3 py-1 bg-white/5 text-white/70 rounded-lg text-xs font-bold border border-white/10"
               >
                 {tag}
               </span>
@@ -441,7 +441,7 @@ function JobCard({ job, onViewDetails }) {
         <div className="flex flex-col justify-end md:justify-center">
           <button 
             onClick={onViewDetails}
-            className="px-6 py-3 bg-indigo-50 text-indigo-700 rounded-2xl font-bold hover:bg-indigo-600 hover:text-white transition-all flex items-center justify-center gap-2"
+            className="px-6 py-3 bg-indigo-500/20 text-indigo-300 rounded-2xl font-bold hover:bg-indigo-500 hover:text-white border border-indigo-500/30 hover:border-indigo-500 transition-all flex items-center justify-center gap-2"
           >
             View Details
             <ChevronRight size={18} />
