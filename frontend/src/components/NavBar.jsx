@@ -15,7 +15,10 @@ export default function NavBar() {
   useEffect(() => {
     async function getUserData() {
       try {
-        if (!token?.access_token) return;
+        if (!token?.access_token) {
+          setUser(null);
+          return;
+        }
 
         const res = await axios.get(`${api}/api/auth/userDetails`, {
           headers: {
@@ -47,16 +50,14 @@ export default function NavBar() {
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo Section */}
-          <div id="LogoSection" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-indigo-500 rounded-lg flex items-center justify-center text-white">
-              <Compass size={20} />
+          <Link to="/" id="LogoSection" className="flex items-center gap-3 group">
+            <div className="relative flex items-center justify-center w-10 h-10 bg-indigo-500/20 border border-indigo-500/40 rounded-xl text-indigo-400 group-hover:bg-indigo-500/40 group-hover:scale-105 group-hover:shadow-[0_0_15px_rgba(99,102,241,0.5)] transition-all duration-300">
+              <Compass size={22} strokeWidth={2.5} className="group-hover:rotate-45 transition-transform duration-500" />
             </div>
-            <h2 className="text-xl font-bold tracking-tight text-white">
-              <Link to="/" className="hover:text-indigo-400 transition">
-                GuidlyAi
-              </Link>
+            <h2 className="text-2xl font-black tracking-tight text-white group-hover:text-indigo-100 transition-colors">
+              Guidly<span className="text-indigo-400">Ai</span>
             </h2>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
           <ul className="hidden md:flex items-center space-x-8">

@@ -13,7 +13,7 @@ import {
 
 export default function Profile() {
   const api = import.meta.env.VITE_API_URL;
-  const { token } = useContext(UserContext);
+  const { token, setToken } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
@@ -30,7 +30,10 @@ export default function Profile() {
   useEffect(() => {
     async function getUserData() {
       try {
-        if (!token?.access_token) return;
+        if (!token?.access_token) {
+          navigate("/auth");
+          return;
+        }
 
         const res = await axios.get(`${api}/api/auth/userDetails`, {
           headers: {
@@ -76,6 +79,7 @@ export default function Profile() {
   const handleLogout = () => {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
+    setToken({ access_token: null, refresh_token: null });
     navigate("/auth");
   };
 

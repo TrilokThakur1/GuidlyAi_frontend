@@ -71,26 +71,26 @@ async function handleSignUp(e) {
 }
 
   return (
-    <div className="min-h-screen flex items-center justify-center  px-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
+    <div className="min-h-screen flex items-center justify-center px-4 pt-16 pb-24">
+      <div className="w-full max-w-md bg-black/30 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl p-8 animate-in fade-in zoom-in duration-300">
         {/* Heading */}
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
-          Welcome to <span className="text-indigo-600">The Guidly</span>
+        <h2 className="text-3xl font-bold text-center text-white mb-8">
+          Welcome to <span className="text-indigo-400">GuidlyAi</span>
         </h2>
 
         <Tabs>
           {/* Tabs */}
-          <TabList className="flex mb-6 rounded-lg overflow-hidden border">
+          <TabList className="flex mb-8 bg-white/5 p-1 rounded-xl border border-white/10">
             <Tab
-              className="w-1/2 text-center py-2 cursor-pointer font-medium text-gray-600 focus:outline-none"
-              selectedClassName="bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
+              className="w-1/2 text-center py-2.5 rounded-lg cursor-pointer font-bold text-white/60 hover:text-white transition-all focus:outline-none"
+              selectedClassName="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm"
             >
               Sign In
             </Tab>
 
             <Tab
-              className="w-1/2 text-center py-2 cursor-pointer font-medium text-gray-600 focus:outline-none"
-              selectedClassName="bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
+              className="w-1/2 text-center py-2.5 rounded-lg cursor-pointer font-bold text-white/60 hover:text-white transition-all focus:outline-none"
+              selectedClassName="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 shadow-sm"
             >
               Sign Up
             </Tab>
@@ -98,18 +98,18 @@ async function handleSignUp(e) {
 
           {/* Sign In */}
           <TabPanel>
-            <form onSubmit={handleSignIn} className="space-y-4">
+            <form onSubmit={handleSignIn} className="space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-300">
               <input
                 type="email"
-                placeholder="Email"
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                placeholder="Email Address"
+                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
               />
               <input
                 type="password"
                 placeholder="Password"
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
               />
-              <button className="w-full py-2 text-white font-semibold rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 transition">
+              <button className="w-full py-3.5 mt-2 text-white font-bold rounded-xl bg-indigo-500 hover:bg-indigo-600 shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all transform active:scale-95">
                 Sign In
               </button>
             </form>
@@ -117,29 +117,37 @@ async function handleSignUp(e) {
 
           {/* Sign Up */}
           <TabPanel>
-            <form onSubmit={handleSignUp} className="space-y-4">
+            <form onSubmit={handleSignUp} className="space-y-5 animate-in fade-in slide-in-from-bottom-4 duration-300">
               <input
                 type="text"
-                placeholder="Name"
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                placeholder="Full Name"
+                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
               />
-              <input
-                type="file"
-                placeholder="Avatar URL"
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
-              />
+              <div className="relative">
+                <input
+                  type="file"
+                  id="avatarUpload"
+                  className="hidden"
+                />
+                <label 
+                  htmlFor="avatarUpload"
+                  className="w-full flex items-center justify-center px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white/70 hover:text-white hover:bg-white/10 cursor-pointer border-dashed transition-all font-medium"
+                >
+                  <span className="mr-2">📸</span> Upload Profile Photo
+                </label>
+              </div>
               <input
                 type="email"
-                placeholder="Email"
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                placeholder="Email Address"
+                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
               />
               <input
                 type="password"
                 placeholder="Password"
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                className="w-full px-5 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
               />
-              <button className="w-full py-2 text-white font-semibold rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-90 transition">
-                Sign Up
+              <button className="w-full py-3.5 mt-2 text-white font-bold rounded-xl bg-indigo-500 hover:bg-indigo-600 shadow-[0_0_20px_rgba(99,102,241,0.3)] transition-all transform active:scale-95">
+                Create Account
               </button>
             </form>
           </TabPanel>
