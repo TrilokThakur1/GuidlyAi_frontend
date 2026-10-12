@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import axios from "axios";
 
 import NavBar from "./components/NavBar.jsx";
 import Home from "./pages/Home.jsx";
@@ -28,6 +29,15 @@ function AnimatedPage({ children }) {
 
 export default function App() {
   const location = useLocation();
+
+  // Pre-warm the backend server (wakes Render from sleep in the background)
+  useEffect(() => {
+    const api = import.meta.env.VITE_API_URL;
+    if (api) {
+      axios.get(`${api}/api/auth/ping`).catch(() => {});
+    }
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen text-white relative">
       <div className="fixed inset-0 z-[-1]">
